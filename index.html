@@ -2171,6 +2171,50 @@
         display: none !important;
       }
     }
+
+    .case-extra {
+  display: none;
+}
+.case-extra.show {
+  display: block;
+}
+.show-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+.btn-show-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  border: 1px solid var(--gold-border);
+  background: var(--bg-surface);
+  transition: all 0.25s ease;
+}
+body.lang-fa .btn-show-more {
+  font-family: var(--font-fa);
+  letter-spacing: 0;
+}
+.btn-show-more:hover {
+  border-color: var(--gold-primary);
+  background: var(--gold-glow);
+}
+.btn-show-more svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+.btn-show-more.expanded svg {
+  transform: rotate(180deg);
+}
   </style>
 </head>
 
@@ -2584,7 +2628,7 @@
           </article>
         </div>
 
-        <div class="case-card-wrap">
+        <div class="case-card-wrap case-extra">
           <article class="case-card" style="--i:2">
             <div class="case-header">
               <div class="case-meta">
@@ -2612,7 +2656,7 @@
           </article>
         </div>
 
-        <div class="case-card-wrap">
+        <div class="case-card-wrap case-extra">
           <article class="case-card" style="--i:2">
             <div class="case-header">
               <div class="case-meta">
@@ -2640,7 +2684,7 @@
           </article>
         </div>
 
-        <div class="case-card-wrap">
+        <div class="case-card-wrap case-extra">
           <article class="case-card" style="--i:2">
             <div class="case-header">
               <div class="case-meta">
@@ -2666,7 +2710,7 @@
           </article>
         </div>
 
-        <div class="case-card-wrap">
+        <div class="case-card-wrap case-extra">
           <article class="case-card" style="--i:2">
             <div class="case-header">
               <div class="case-meta">
@@ -2692,7 +2736,7 @@
           </article>
         </div>
 
-        <div class="case-card-wrap">
+        <div class="case-card-wrap case-extra">
           <article class="case-card" style="--i:2">
             <div class="case-header">
               <div class="case-meta">
@@ -2718,7 +2762,7 @@
           </article>
         </div>
 
-        <div class="case-card-wrap">
+        <div class="case-card-wrap case-extra">
           <article class="case-card" style="--i:2">
             <div class="case-header">
               <div class="case-meta">
@@ -2744,7 +2788,7 @@
           </article>
         </div>
 
-        <div class="case-card-wrap">
+        <div class="case-card-wrap case-extra">
           <article class="case-card" style="--i:2">
             <div class="case-header">
               <div class="case-meta">
@@ -2770,7 +2814,7 @@
           </article>
         </div>
 
-        <div class="case-card-wrap">
+        <div class="case-card-wrap case-extra">
           <article class="case-card" style="--i:2">
             <div class="case-header">
               <div class="case-meta">
@@ -2796,6 +2840,15 @@
           </article>
         </div>
 
+      </div>
+      <div class="show-more-wrap">
+        <button class="btn-show-more" id="btnShowMoreCases" type="button">
+          <span class="i-en">Show More Cases</span><span class="i-fa">مشاهده موارد بیشتر</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
       </div>
     </section>
 
@@ -3289,7 +3342,8 @@
       applyTheme(currentTheme);
 
       themeToggleBtn.addEventListener('click', function () {
-        applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        var target = currentTheme === 'dark' ? 'light' : 'dark';
+        animateWithWipe(function () { applyTheme(target); });
       });
 
       /* ---------- Language Switching Logic ---------- */
@@ -3348,9 +3402,10 @@
 
       var langWipe = document.getElementById('langWipe');
 
-      function animateLangChange(newLang) {
-        if (newLang === lang) return;
-        if (reduceMotion || !langWipe) { applyLang(newLang); return; }
+      var langWipe = document.getElementById('langWipe');
+
+      function animateWithWipe(changeFn) {
+        if (reduceMotion || !langWipe) { changeFn(); return; }
 
         langWipe.style.transition = 'none';
         langWipe.style.transformOrigin = 'left';
@@ -3361,12 +3416,20 @@
         langWipe.style.transform = 'scaleX(1)'; // sweeps in, covering the screen
 
         setTimeout(function () {
-          applyLang(newLang); // content swaps while fully hidden behind the wipe
+          changeFn(); // swap happens while fully hidden behind the wipe
 
           langWipe.style.transformOrigin = 'right';
           void langWipe.offsetWidth;
-          langWipe.style.transform = 'scaleX(0)'; // retracts onward, revealing new content
+          langWipe.style.transform = 'scaleX(0)'; // retracts onward, revealing the change
         }, 360);
+      }
+
+      var langPill = document.querySelector('.lang-pill');
+      if (langPill) {
+        langPill.addEventListener('click', function () {
+          var target = lang === 'en' ? 'fa' : 'en';
+          animateWithWipe(function () { applyLang(target); });
+        });
       }
 
       var langPill = document.querySelector('.lang-pill');
@@ -3605,6 +3668,25 @@
             contactForm.style.display = 'flex';
           });
         }
+      }
+
+      var btnShowMoreCases = document.getElementById('btnShowMoreCases');
+      if (btnShowMoreCases) {
+        btnShowMoreCases.addEventListener('click', function () {
+          var expanded = btnShowMoreCases.classList.toggle('expanded');
+          document.querySelectorAll('.case-extra').forEach(function (el) {
+            el.classList.toggle('show', expanded);
+          });
+
+          // re-measure so the sticky card-stacking effect accounts for the newly shown/hidden cards
+          cards = stack ? stack.querySelectorAll('.case-card') : [];
+          measure();
+          onFrame();
+
+          if (!expanded) {
+            document.getElementById('work').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
       }
 
       /* Initialize language & trigger initial frame */
