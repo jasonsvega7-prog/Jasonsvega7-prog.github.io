@@ -1575,42 +1575,48 @@
     /* ==========================================================================
    MARQUEE SHOWCASE (Preserved Continuous Dual Loop)
    ========================================================================== */
-    
+
 
     .marquee-wrap {
-  padding: 30px 0 80px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-}
-.mq-row {
-  position: relative;
-  width: 100%;
-  height: 190px; /* matches .mq-card height */
-}
-.mq-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 320px;
-  height: 190px;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid var(--gold-border);
-  background: var(--bg-card);
-  box-shadow: var(--shadow-card);
-  will-change: transform;
-}
-.mq-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+      padding: 30px 0 80px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      row-gap: 10px;
+    }
+
+    .mq-row {
+      position: relative;
+      width: 100%;
+      height: 190px;
+      /* matches .mq-card height */
+    }
+
+    .mq-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 320px;
+      height: 190px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--gold-border);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-card);
+      will-change: transform;
+    }
+
+    .mq-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
     @media (prefers-reduced-motion: reduce) {
-      .mq-row { animation: none !important; }
+      .mq-row {
+        animation: none !important;
+      }
     }
 
     /* ==========================================================================
@@ -2091,47 +2097,80 @@
     }
 
     /* Shorten hover/UI transitions only — don't touch animation-duration globally */
-    a, button, .btn, .tarot-card, .case-card, .btn-view-case {
+    a,
+    button,
+    .btn,
+    .tarot-card,
+    .case-card,
+    .btn-view-case {
       transition-duration: 0.15s !important;
     }
 
-.page-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 99999 !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  background: var(--bg-deep);
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-.page-loader.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-.loader-ring {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: 2px solid var(--gold-border);
-  border-top-color: var(--gold-primary);
-  animation: loaderSpin 0.9s linear infinite;
-}
-@keyframes loaderSpin { to { transform: rotate(360deg); } }
-.loader-mark {
-  font-family: var(--font-serif);
-  font-size: 0.78rem;
-  letter-spacing: 0.24em;
-  color: var(--gold-primary);
-  text-transform: uppercase;
-}
-@media (prefers-reduced-motion: reduce) {
-  .loader-ring { animation: none; border-top-color: var(--gold-primary); }
-}
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999 !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: var(--bg-deep);
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
 
+    .page-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-ring {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-border);
+      border-top-color: var(--gold-primary);
+      animation: loaderSpin 0.9s linear infinite;
+    }
+
+    @keyframes loaderSpin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loader-mark {
+      font-family: var(--font-serif);
+      font-size: 0.78rem;
+      letter-spacing: 0.24em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .loader-ring {
+        animation: none;
+        border-top-color: var(--gold-primary);
+      }
+    }
+
+    .lang-wipe {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-muted));
+      transform: scaleX(0);
+      transform-origin: left;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lang-wipe {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 
@@ -2141,6 +2180,8 @@
     <div class="loader-ring"></div>
     <div class="loader-mark">✦ POLARIS ✦</div>
   </div>
+
+  <div id="langWipe" class="lang-wipe" aria-hidden="true"></div>
 
   <!-- Accessible Keyboard Skip-to-Content Link -->
   <a class="skip-link" href="#top" data-i18n="skipLink">Skip to content</a>
@@ -2738,7 +2779,7 @@
                   <h3 class="case-name" data-i18n="case12Name"></h3>
                 </div>
               </div>
-                            <a class="btn-view-case" href="Mini-Editor.zip" data-i18n="viewCase">VIEW CASE →</a>
+              <a class="btn-view-case" href="Mini-Editor.zip" data-i18n="viewCase">VIEW CASE →</a>
             </div>
 
             <div class="case-body-grid">
@@ -3305,8 +3346,35 @@
         onFrame();
       }
 
-      btnLangEn.addEventListener('click', function () { applyLang('en'); });
-      btnLangFa.addEventListener('click', function () { applyLang('fa'); });
+      var langWipe = document.getElementById('langWipe');
+
+      function animateLangChange(newLang) {
+        if (newLang === lang) return;
+        if (reduceMotion || !langWipe) { applyLang(newLang); return; }
+
+        langWipe.style.transition = 'none';
+        langWipe.style.transformOrigin = 'left';
+        langWipe.style.transform = 'scaleX(0)';
+        void langWipe.offsetWidth; // force reflow so the reset above actually applies
+
+        langWipe.style.transition = 'transform 0.35s cubic-bezier(0.76,0,0.24,1)';
+        langWipe.style.transform = 'scaleX(1)'; // sweeps in, covering the screen
+
+        setTimeout(function () {
+          applyLang(newLang); // content swaps while fully hidden behind the wipe
+
+          langWipe.style.transformOrigin = 'right';
+          void langWipe.offsetWidth;
+          langWipe.style.transform = 'scaleX(0)'; // retracts onward, revealing new content
+        }, 360);
+      }
+
+      var langPill = document.querySelector('.lang-pill');
+      if (langPill) {
+        langPill.addEventListener('click', function () {
+          animateLangChange(lang === 'en' ? 'fa' : 'en');
+        });
+      }
 
       /* ---------- Scroll Reveal (IntersectionObserver) ---------- */
       var revealEls = document.querySelectorAll('.reveal');
