@@ -1,0 +1,3551 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polaris / Swords · Developer Portfolio</title>
+  <meta name="description"
+    content="Polaris Swords developer portfolio. Backend systems, Python automation, and web engineering. نمونه‌کار خال شمشیرها از تیم پولاریس" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;700;900&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" type="image/png" href="polaris-logo.png" />
+
+  <style>
+    /* ==========================================================================
+   THEME DESIGN TOKENS (Dark Mode Default + Luxury Light Mode)
+   ========================================================================== */
+    :root {
+      --bg-deep: #030712;
+      --bg-cosmic: #050B17;
+      --bg-surface: rgba(8, 17, 34, 0.78);
+      --bg-surface-hover: rgba(12, 25, 48, 0.92);
+      --bg-card: rgba(8, 17, 34, 0.85);
+
+      --gold-primary: #E5C478;
+      --gold-light: #FBF0CA;
+      --gold-muted: #9D7D3E;
+      --gold-border: rgba(229, 196, 120, 0.35);
+      --gold-glow: rgba(229, 196, 120, 0.2);
+
+      --cyan-glow: #00E5FF;
+      --cyan-muted: #0891B2;
+      --cyan-aura: rgba(0, 229, 255, 0.22);
+      --cyan-tag-bg: rgba(0, 229, 255, 0.08);
+      --cyan-tag-border: rgba(0, 229, 255, 0.25);
+
+      --text-main: #E2E8F0;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+
+      --nav-bg: rgba(3, 7, 18, 0.88);
+      --dock-bg: rgba(3, 7, 18, 0.94);
+      --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.65);
+      --shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.85);
+
+      --font-serif: 'Cinzel', serif;
+      --font-sans: 'Outfit', -apple-system, sans-serif;
+      --font-fa: 'Vazirmatn', -apple-system, sans-serif;
+
+      --transition-theme: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+
+    [data-theme="light"] {
+      --bg-deep: #F6F8FC;
+      --bg-cosmic: #EDF2F9;
+      --bg-surface: rgba(255, 255, 255, 0.85);
+      --bg-surface-hover: rgba(255, 255, 255, 0.98);
+      --bg-card: rgba(255, 255, 255, 0.92);
+
+      --gold-primary: #A1792A;
+      --gold-light: #785818;
+      --gold-muted: #574010;
+      --gold-border: rgba(161, 121, 42, 0.32);
+      --gold-glow: rgba(161, 121, 42, 0.15);
+
+      --cyan-glow: #0284C7;
+      --cyan-muted: #0369A1;
+      --cyan-aura: rgba(2, 132, 199, 0.12);
+      --cyan-tag-bg: rgba(2, 132, 199, 0.08);
+      --cyan-tag-border: rgba(2, 132, 199, 0.28);
+
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-dim: #64748B;
+
+      --nav-bg: rgba(246, 248, 252, 0.9);
+      --dock-bg: rgba(255, 255, 255, 0.94);
+      --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow-hover: 0 18px 40px rgba(15, 23, 42, 0.14);
+    }
+
+    /* ==========================================================================
+   GLOBAL RESET & FOUNDATION
+   ========================================================================== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-deep);
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-muted) var(--bg-deep);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .ring-outer,
+      .ring-inner,
+      .pulse-dot {
+        animation: none !important;
+      }
+    }
+
+    /* Custom Celestial Scrollbar */
+    ::-webkit-scrollbar {
+      width: 9px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-deep);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold-muted);
+      border-radius: 9999px;
+      border: 2px solid var(--bg-deep);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-primary);
+    }
+
+    /* Text Selection */
+    ::selection {
+      background: var(--gold-primary);
+      color: #030712;
+    }
+
+    /* Accessible Focus Rings */
+    :focus-visible {
+      outline: 2px solid var(--gold-primary);
+      outline-offset: 3px;
+    }
+
+    /* Caret Color */
+    input,
+    textarea {
+      caret-color: var(--gold-primary);
+    }
+
+    /* Skip to Content Link */
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 20px;
+      background: var(--gold-primary);
+      color: #030712;
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      z-index: 9999;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.4);
+      transition: top 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      text-decoration: none;
+    }
+
+    .skip-link:focus-visible {
+      top: 20px;
+    }
+
+    body.lang-fa .skip-link {
+      font-family: var(--font-fa);
+      left: auto;
+      right: 20px;
+    }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow-x: clip;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+      position: relative;
+      transition: var(--transition-theme);
+    }
+
+    body.lang-fa {
+      font-family: var(--font-fa);
+      direction: rtl;
+      text-align: right;
+    }
+
+    body.lang-fa .font-serif,
+    body.lang-fa h1,
+    body.lang-fa h2,
+    body.lang-fa h3,
+    body.lang-fa .brand-name,
+    body.lang-fa .btn,
+    body.lang-fa .nav-item {
+      letter-spacing: 0 !important;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* Starfield / Constellation Ambient Background (Spanning the Full Page) */
+    .starfield-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        /* Hero Section apex crown glow */
+        radial-gradient(circle at 50% 350px, var(--cyan-aura) 0%, transparent 550px),
+        radial-gradient(circle at 85% 650px, var(--gold-glow) 0%, transparent 500px),
+        /* Suit of Swords Section nebulae */
+        radial-gradient(circle at 15% 1500px, var(--cyan-aura) 0%, transparent 600px),
+        radial-gradient(circle at 85% 2100px, var(--gold-glow) 0%, transparent 550px),
+        /* Philosophy Section central cosmic aura */
+        radial-gradient(circle at 50% 2900px, var(--cyan-aura) 0%, transparent 650px),
+        /* Selected Cases Section flowing auroras */
+        radial-gradient(circle at 15% 4100px, var(--gold-glow) 0%, transparent 600px),
+        radial-gradient(circle at 85% 5300px, var(--cyan-aura) 0%, transparent 600px),
+        radial-gradient(circle at 20% 6400px, var(--gold-glow) 0%, transparent 550px),
+        /* Contact Portal radiant beacon */
+        radial-gradient(circle at 50% 7400px, var(--cyan-aura) 0%, transparent 700px),
+        radial-gradient(circle at 50% 8100px, var(--gold-glow) 0%, transparent 600px),
+        var(--bg-deep);
+      transition: var(--transition-theme);
+    }
+
+    .starfield-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(1px 1px at 25px 35px, #ffffff 0.5px, rgba(0, 0, 0, 0) 1px),
+        radial-gradient(1.2px 1.2px at 150px 80px, var(--gold-light) 0.6px, rgba(0, 0, 0, 0) 1.2px),
+        radial-gradient(1px 1px at 290px 160px, #ffffff 0.5px, rgba(0, 0, 0, 0) 1px),
+        radial-gradient(1.5px 1.5px at 430px 230px, var(--cyan-glow) 0.75px, rgba(0, 0, 0, 0) 1.5px),
+        radial-gradient(1px 1px at 610px 95px, #ffffff 0.5px, rgba(0, 0, 0, 0) 1px),
+        radial-gradient(1.2px 1.2px at 760px 320px, var(--gold-primary) 0.6px, rgba(0, 0, 0, 0) 1.2px),
+        radial-gradient(1px 1px at 910px 190px, #ffffff 0.5px, rgba(0, 0, 0, 0) 1px),
+        radial-gradient(1.5px 1.5px at 1120px 85px, #ffffff 0.75px, rgba(0, 0, 0, 0) 1.5px),
+        radial-gradient(1px 1px at 1310px 270px, var(--cyan-glow) 0.5px, rgba(0, 0, 0, 0) 1px);
+      background-repeat: repeat;
+      background-size: 750px 550px;
+      opacity: 0.38;
+    }
+
+    [data-theme="light"] .starfield-bg::before {
+      opacity: 0.14;
+      filter: invert(1);
+    }
+
+    #root {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    /* ==========================================================================
+   SCROLL REVEAL (Preserved Motion Effect)
+   ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translate3d(var(--rx, 0px), var(--ry, 30px), 0);
+      transition:
+        opacity var(--dur, 0.75s) cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+        transform var(--dur, 0.75s) cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s);
+      will-change: opacity, transform;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* ==========================================================================
+   ORNATE TYPOGRAPHY & HEADINGS
+   ========================================================================== */
+    .font-serif {
+      font-family: var(--font-serif);
+    }
+
+    .gold-heading {
+      font-family: var(--font-serif);
+      color: var(--gold-primary);
+      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-primary) 65%, var(--gold-muted) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    [data-theme="light"] .gold-heading {
+      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-muted) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 0 auto 32px;
+      text-align: center;
+      max-width: 900px;
+      padding: 0 20px;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.25rem, 2.8vw, 1.95rem);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    body.lang-fa .section-title {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .section-title .star {
+      color: var(--gold-primary);
+      font-size: 0.9em;
+    }
+
+    .section-subtitle {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--cyan-glow);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+   NAVIGATION BAR
+   ========================================================================== */
+    .header-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--gold-border);
+      transition: var(--transition-theme);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .nav-brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-primary);
+      padding: 4px;
+      background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #F1F5F9 65%, #E2E8F0 100%);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .nav-brand:hover .nav-brand-logo {
+      transform: scale(1.08);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--gold-primary);
+      line-height: 1.1;
+    }
+
+    body.lang-fa .brand-title {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .brand-subtitle {
+      font-size: 0.65rem;
+      letter-spacing: 0.24em;
+      color: var(--cyan-glow);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    body.lang-fa .brand-subtitle {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .nav-menu {
+      display: none;
+      align-items: center;
+      gap: 24px;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-menu {
+        display: flex;
+      }
+    }
+
+    .nav-item {
+      color: var(--text-main);
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.25s ease, transform 0.2s ease;
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      color: var(--gold-primary);
+      transform: translateY(-1px);
+    }
+
+    .nav-item::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gold-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    [dir="rtl"] .nav-item::after {
+      transform-origin: right;
+    }
+
+    .nav-item:hover::after,
+    .nav-item.active::after {
+      transform: scaleX(1);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-border);
+      background: var(--bg-surface);
+      color: var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      transition: all 0.25s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      transform: scale(1.08);
+      border-color: var(--gold-primary);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .theme-toggle-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Language Toggle Pill */
+    .lang-pill {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--gold-border);
+      border-radius: 9999px;
+      padding: 3px;
+      gap: 2px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .lang-btn {
+      padding: 5px 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-radius: 9999px;
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+    }
+
+    .lang-btn.active {
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-muted));
+      color: #030712;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 4px var(--gold-glow);
+    }
+
+    [data-theme="light"] .lang-btn.active {
+      color: #FFFFFF;
+    }
+
+    /* Mobile Hamburger Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-border);
+      background: var(--bg-surface);
+      color: var(--gold-primary);
+      gap: 4px;
+      padding: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 1023px) {
+      .mobile-menu-btn {
+        display: flex;
+      }
+    }
+
+    .mobile-menu-btn:hover {
+      border-color: var(--gold-primary);
+      transform: scale(1.06);
+    }
+
+    .mobile-menu-btn .bar {
+      width: 18px;
+      height: 2px;
+      background: var(--gold-primary);
+      border-radius: 2px;
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease;
+    }
+
+    .mobile-menu-btn.open .bar-1 {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .mobile-menu-btn.open .bar-2 {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .mobile-menu-btn.open .bar-3 {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* Mobile Glassmorphic Drawer */
+    .mobile-menu-drawer {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 18px 24px 24px;
+      gap: 8px;
+      z-index: 99;
+      transform: translateY(-130%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .mobile-menu-drawer.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-drawer-item {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    body.lang-fa .mobile-drawer-item {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .mobile-drawer-item:hover,
+    .mobile-drawer-item:active {
+      background: var(--gold-glow);
+      border-color: var(--gold-border);
+      color: var(--gold-primary);
+      transform: translateX(4px);
+    }
+
+    [dir="rtl"] .mobile-drawer-item:hover {
+      transform: translateX(-4px);
+    }
+
+    @media (max-width: 768px) {
+      .header-nav {
+        padding: 10px 14px;
+        gap: 8px;
+      }
+
+      .nav-brand {
+        gap: 8px;
+      }
+
+      .nav-brand-logo {
+        width: 36px;
+        height: 36px;
+        padding: 2px;
+      }
+
+      .brand-title {
+        font-size: 0.92rem;
+        letter-spacing: 0.12em;
+      }
+
+      .brand-subtitle {
+        font-size: 0.58rem;
+        letter-spacing: 0.16em;
+      }
+
+      .nav-controls {
+        gap: 6px;
+      }
+
+      .theme-toggle-btn {
+        width: 34px;
+        height: 34px;
+      }
+
+      .lang-btn {
+        padding: 4px 8px;
+        font-size: 0.65rem;
+      }
+    }
+
+
+    /* ==========================================================================
+   HERO SECTION (3-Column Desktop Layout from Mockup)
+   ========================================================================== */
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 32px 80px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      justify-items: center;
+      gap: 40px;
+      max-width: 1380px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1.15fr 1fr 0.85fr;
+        gap: 32px;
+        align-items: center;
+      }
+    }
+
+    /* Left Hero Column: Title & Manifesto */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+      z-index: 10;
+    }
+
+    [dir="rtl"] .hero-left {
+      text-align: right;
+    }
+
+    .hero-main-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      line-height: 1.08;
+      text-transform: uppercase;
+    }
+
+    body.lang-fa .hero-main-title {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .hero-subhead {
+      font-family: var(--font-serif);
+      font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+      color: var(--cyan-glow);
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    body.lang-fa .hero-subhead {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      max-width: 480px;
+      font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+      line-height: 1.75;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    /* CTA Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      white-space: nowrap;
+    }
+
+    body.lang-fa .btn {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 60%, var(--gold-muted) 100%);
+      color: #030712;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--gold-border);
+    }
+
+    [data-theme="light"] .btn-gold {
+      color: #FFFFFF;
+      background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-muted) 100%);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.4);
+      filter: brightness(1.08);
+    }
+
+    .btn-gold-outline {
+      background: var(--bg-surface);
+      color: var(--gold-primary);
+      border: 1px solid var(--gold-border);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-gold-outline:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold-primary);
+      background: var(--gold-glow);
+    }
+
+    /* Center Hero Column: Magnetic Celestial Sword */
+    .hero-center {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 1 / 1;
+    }
+
+    .astronomical-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      transition: transform 0.6s ease-out;
+    }
+
+    .ring-outer {
+      inset: 4%;
+      border: 1px dashed var(--gold-border);
+      animation: spinSlow 90s linear infinite;
+    }
+
+    .ring-mid {
+      inset: 15%;
+      border: 1px solid var(--cyan-aura);
+      box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.4), inset 0 1px 4px var(--cyan-aura);
+    }
+
+    .ring-inner {
+      inset: 25%;
+      border: 1px dashed var(--gold-border);
+      animation: spinSlow 60s linear infinite reverse;
+    }
+
+    .astronomical-ring::before {
+      content: "✦";
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--gold-primary);
+      font-size: 14px;
+    }
+
+    .astronomical-ring::after {
+      content: "☽";
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--gold-primary);
+      font-size: 14px;
+    }
+
+    @keyframes spinSlow {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* The Sword Portal Container (Preserved Magnetic Physics) */
+    .sword-portal-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+    }
+
+    .sword-portal-wrap:active {
+      cursor: grabbing;
+    }
+
+    .sword-magnet {
+      display: block;
+      position: relative;
+      width: 85%;
+      height: 85%;
+      will-change: transform;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .sword-nebula-glow {
+      position: absolute;
+      inset: 12%;
+      background: radial-gradient(circle at 50% 50%, var(--cyan-aura) 0%, var(--cyan-tag-bg) 45%, transparent 70%);
+      filter: blur(24px);
+      border-radius: 50%;
+      animation: pulseGlow 4s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    .sword-artwork {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 35px var(--cyan-aura)) drop-shadow(0 0 10px var(--gold-glow));
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Right Hero Column: Team Suit Tarot Card */
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .hero-card-frame {
+      position: relative;
+      width: 250px;
+      background: var(--bg-card);
+      border-radius: 18px;
+      padding: 8px;
+      border: 1px solid var(--gold-border);
+      box-shadow: var(--shadow-card);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card-frame:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .hero-card-inner {
+      position: relative;
+      border: 1px solid var(--gold-border);
+      border-radius: 12px;
+      padding: 24px 18px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      background: radial-gradient(circle at 50% 30%, var(--bg-surface) 0%, var(--bg-deep) 100%);
+      overflow: hidden;
+    }
+
+    .hero-card-inner::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1px dashed var(--gold-border);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .card-emblem-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      padding: 4px;
+      background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #F1F5F9 65%, #E2E8F0 100%);
+      border: 1.5px solid var(--gold-primary);
+      object-fit: contain;
+      margin-bottom: 4px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-team-title {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--gold-primary);
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    body.lang-fa .card-team-title {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .card-suit-badge {
+      color: var(--cyan-glow);
+      font-family: var(--font-serif);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    body.lang-fa .card-suit-badge {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .card-motto {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .card-sword-medallion {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cyan-glow);
+      padding: 4px;
+      margin-top: 6px;
+      background: radial-gradient(circle, var(--cyan-aura) 0%, var(--bg-deep) 70%);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-sword-medallion img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* ==========================================================================
+   MINOR ARCANA — SUIT OF SWORDS SECTION (#swords)
+   (Dedicated Tarot Cards: Ace, Two/Page, Knight, Queen)
+   ========================================================================== */
+    .arcana-section {
+      position: relative;
+      padding: 90px 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .arcana-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    @media (min-width: 600px) and (max-width: 899px) {
+      .arcana-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .arcana-grid .tarot-card:nth-child(5) {
+        grid-column: 1 / span 2;
+        max-width: 380px;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 900px) and (max-width: 1199px) {
+      .arcana-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 24px;
+      }
+
+      .arcana-grid .tarot-card:nth-child(1),
+      .arcana-grid .tarot-card:nth-child(2),
+      .arcana-grid .tarot-card:nth-child(3) {
+        grid-column: span 2;
+      }
+
+      .arcana-grid .tarot-card:nth-child(4) {
+        grid-column: 2 / span 2;
+      }
+
+      .arcana-grid .tarot-card:nth-child(5) {
+        grid-column: 4 / span 2;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .arcana-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+      }
+
+      .arcana-grid .tarot-card {
+        grid-column: auto;
+      }
+    }
+
+    .tarot-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .tarot-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: var(--gold-primary);
+      box-shadow: var(--shadow-hover), 0 8px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .tarot-card-artwork {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 14;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--gold-border);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+      background: #020610;
+    }
+
+    .tarot-card-artwork img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .tarot-card:hover .tarot-card-artwork img {
+      transform: scale(1.06);
+    }
+
+    .tarot-card-details {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      gap: 6px;
+      padding: 4px 6px 8px;
+      flex-grow: 1;
+    }
+
+    .tarot-card-code {
+      font-family: var(--font-serif);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--cyan-glow);
+      text-transform: uppercase;
+    }
+
+    body.lang-fa .tarot-card-code {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .tarot-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+    }
+
+    body.lang-fa .tarot-card-title {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .tarot-card-role {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    body.lang-fa .tarot-card-role {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .tarot-card-desc {
+      font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ==========================================================================
+   PHILOSOPHY & MANIFESTO (#about)
+   (Preserved Character-by-Character Scrub Illumination)
+   ========================================================================== */
+    .philosophy-section {
+      position: relative;
+      padding: 100px 24px;
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .suit-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--gold-border);
+      border-radius: 9999px;
+      padding: 8px 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold-primary);
+      margin-bottom: 32px;
+      background: var(--bg-surface);
+    }
+
+    body.lang-fa .suit-pill {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .suit-pill svg {
+      width: 14px;
+      height: 14px;
+      color: var(--cyan-glow);
+      flex-shrink: 0;
+    }
+
+    .char-text {
+      font-family: var(--font-serif);
+      color: var(--text-main);
+      font-weight: 500;
+      line-height: 1.8;
+      font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+      letter-spacing: 0.02em;
+    }
+
+    body.lang-fa .char-text {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+      line-height: 2.1;
+    }
+
+    .char-text .w {
+      display: inline-block;
+    }
+
+    .char-text .u {
+      opacity: 0.2;
+      transition: opacity 0.15s ease-out;
+    }
+
+    /* ==========================================================================
+   SELECTED WORK — SWORDS CASES (#work)
+   (Preserved Sticky Card Stacking Motion)
+   ========================================================================== */
+    .cases-section {
+      position: relative;
+      padding: 100px 24px 140px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .stack-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .case-card-wrap {
+      min-height: 75vh;
+    }
+
+    .case-card {
+      --stickytop: 96px;
+      position: sticky;
+      top: calc(var(--stickytop) + var(--i, 0) * 30px);
+      transform-origin: top center;
+      border: 1px solid var(--gold-border);
+      border-radius: 28px;
+      background: var(--bg-card);
+      padding: 30px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(12px);
+      will-change: transform;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .case-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--gold-border);
+    }
+
+    .case-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .case-index {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+      font-weight: 800;
+      color: var(--gold-primary);
+      line-height: 1;
+    }
+
+    .case-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .case-category {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan-glow);
+      font-weight: 600;
+    }
+
+    body.lang-fa .case-category {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .case-name {
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    body.lang-fa .case-name {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .btn-view-case {
+      font-family: var(--font-serif);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      border: 1px solid var(--gold-border);
+      background: var(--bg-surface);
+      transition: all 0.25s ease;
+    }
+
+    body.lang-fa .btn-view-case {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .btn-view-case:hover {
+      border-color: var(--gold-primary);
+      background: var(--gold-glow);
+      transform: translateX(4px);
+    }
+
+    [dir="rtl"] .btn-view-case:hover {
+      transform: translateX(-4px);
+    }
+
+    .case-body-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .case-body-grid {
+        grid-template-columns: 1.1fr 1fr;
+      }
+    }
+
+    .case-desc-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .case-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .case-tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .case-tag {
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--cyan-tag-bg);
+      border: 1px solid var(--cyan-tag-border);
+      color: var(--cyan-glow);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .case-preview {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--gold-border);
+      box-shadow: var(--shadow-card);
+      background: #040914;
+    }
+
+    .case-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    /* ---- Inline bilingual text for pasted-in cards — no need to touch the I18N object ---- */
+    .i-fa {
+      display: none;
+    }
+
+    body.lang-fa .i-fa {
+      display: inline;
+    }
+
+    body.lang-fa .i-en {
+      display: none;
+    }
+
+    /* ---- Confidential / NDA-protected project badge ---- */
+    .case-confidential-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(148, 163, 184, 0.08);
+      border: 1px dashed var(--text-dim);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      width: fit-content;
+    }
+
+    /* ---- Modifier: case card with no preview image ---- */
+    .case-body-grid--full {
+      grid-template-columns: 1fr !important;
+    }
+
+    .case-card:hover .case-preview img {
+      transform: scale(1.04);
+    }
+
+    /* ==========================================================================
+   MARQUEE SHOWCASE (Preserved Continuous Dual Loop)
+   ========================================================================== */
+    
+
+    .marquee-wrap {
+  padding: 30px 0 80px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+.mq-row {
+  position: relative;
+  width: 100%;
+  height: 190px; /* matches .mq-card height */
+}
+.mq-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 190px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--gold-border);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+  will-change: transform;
+}
+.mq-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+    @media (prefers-reduced-motion: reduce) {
+      .mq-row { animation: none !important; }
+    }
+
+    /* ==========================================================================
+   CONTACT FORM & TRANSMISSION SIMULATION (#contact)
+   ========================================================================== */
+    .contact-section {
+      position: relative;
+      padding: 90px 24px 70px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 28px;
+      padding: 44px 38px;
+      box-shadow: var(--shadow-card), 0 8px 32px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @media (max-width: 640px) {
+      .contact-card {
+        padding: 28px 20px;
+        border-radius: 18px;
+      }
+    }
+
+    .contact-card:hover {
+      border-color: var(--gold-primary);
+      box-shadow: var(--shadow-hover), 0 12px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 640px) {
+      .form-row-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    body.lang-fa .form-group {
+      text-align: right;
+    }
+
+    .form-label {
+      font-family: var(--font-serif);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+    }
+
+    body.lang-fa .form-label {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: rgba(3, 7, 18, 0.6);
+      border: 1px solid var(--gold-border);
+      border-radius: 12px;
+      padding: 13px 16px;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    [data-theme="light"] .form-input,
+    [data-theme="light"] .form-select,
+    [data-theme="light"] .form-textarea {
+      background: var(--bg-surface-hover);
+      color: var(--text-main);
+    }
+
+    body.lang-fa .form-input,
+    body.lang-fa .form-select,
+    body.lang-fa .form-textarea {
+      font-family: var(--font-fa);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 0 2px var(--gold-primary);
+      background: rgba(8, 17, 34, 0.85);
+    }
+
+    [data-theme="light"] .form-input:focus,
+    [data-theme="light"] .form-select:focus,
+    [data-theme="light"] .form-textarea:focus {
+      background: var(--bg-surface-hover);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 115px;
+      line-height: 1.6;
+    }
+
+    .form-submit-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .form-status-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    body.lang-fa .form-status-note {
+      font-family: var(--font-fa);
+    }
+
+    .form-status-note .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan-glow);
+      box-shadow: 0 0 4px var(--cyan-glow);
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+
+      0%,
+      100% {
+        opacity: 0.4;
+        transform: scale(0.85);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+    }
+
+    /* Success Simulation State */
+    .form-success-box {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 36px 16px 20px;
+      gap: 16px;
+      animation: fadeInScale 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .form-success-box.show {
+      display: flex;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .success-emblem {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-primary);
+      background: radial-gradient(circle at 50% 50%, var(--bg-surface) 0%, var(--bg-deep) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.35);
+      color: var(--gold-primary);
+      font-size: 1.75rem;
+    }
+
+    .success-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+      color: var(--gold-primary);
+      letter-spacing: 0.1em;
+    }
+
+    body.lang-fa .success-title {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .success-desc {
+      max-width: 520px;
+      font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    body.lang-fa .success-desc {
+      font-family: var(--font-fa);
+    }
+
+    /* ==========================================================================
+   FOOTER SECTION
+   ========================================================================== */
+    .footer-section {
+      position: relative;
+      padding: 70px 24px 50px;
+      text-align: center;
+      border-top: 1px solid var(--gold-border);
+      background: linear-gradient(180deg, transparent 0%, var(--bg-surface) 100%);
+    }
+
+    .footer-logo-wrap {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-primary);
+      padding: 6px;
+      background: radial-gradient(circle at 50% 50%, #ffffff 0%, #ffffff 100%);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .footer-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.25rem, 2.8vw, 1.95rem);
+      letter-spacing: 0.16em;
+      color: var(--gold-primary);
+    }
+
+    body.lang-fa .footer-title {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .footer-subtitle {
+      font-size: 0.95rem;
+      color: var(--cyan-glow);
+      margin-top: 4px;
+    }
+
+    .footer-desc {
+      max-width: 560px;
+      margin: 16px auto 26px;
+      font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .footer-meta-tags {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    body.lang-fa .footer-meta-tags {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    /* ==========================================================================
+   MOBILE BOTTOM NAVIGATION DOCK (Shown in Mockup Mobile View)
+   ========================================================================== */
+    .mobile-nav-dock {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--dock-bg);
+      border-top: 1px solid var(--gold-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 8px 16px;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-nav-dock {
+        display: flex;
+      }
+
+      body {
+        padding-bottom: 70px;
+      }
+    }
+
+    .dock-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+
+    body.lang-fa .dock-item {
+      font-family: var(--font-fa);
+      letter-spacing: 0;
+    }
+
+    .dock-item svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .dock-item:hover,
+    .dock-item.active {
+      color: var(--gold-primary);
+    }
+
+    .dock-item:hover svg,
+    .dock-item.active svg {
+      color: var(--cyan-glow);
+      filter: drop-shadow(0 0 6px var(--cyan-glow));
+    }
+
+    /* ==========================================================================
+       SCROLL TO TOP FLOATING BUTTON
+       ========================================================================== */
+    .scroll-to-top-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 990;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-primary);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px) scale(0.92);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    [dir="rtl"] .scroll-to-top-btn {
+      right: auto;
+      left: 30px;
+    }
+
+    .scroll-to-top-btn.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .scroll-to-top-btn:hover {
+      background: var(--gold-glow);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .scroll-to-top-btn svg {
+      width: 22px;
+      height: 22px;
+      transition: transform 0.25s ease;
+    }
+
+    .scroll-to-top-btn:hover svg {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .scroll-to-top-btn {
+        bottom: 80px;
+        /* Above the mobile dock */
+        right: 18px;
+        width: 42px;
+        height: 42px;
+      }
+
+      [dir="rtl"] .scroll-to-top-btn {
+        left: 18px;
+        right: auto;
+      }
+    }
+
+    /* ================= MINIMAL ANIMATIONS OVERRIDE ================= */
+
+    /* Kill the slow-spinning hero rings and glow pulse */
+    .ring-outer,
+    .ring-inner,
+    .pulse-dot {
+      animation: none !important;
+    }
+
+    #particles-canvas,
+    .ring-outer,
+    .ring-inner {
+      display: none !important;
+    }
+
+    /* Reveal-on-scroll: plain fade, no slide-up */
+    .reveal {
+      transform: none !important;
+      transition: opacity 0.2s ease !important;
+    }
+
+    /* Kill 3D tilt on tarot cards, magnetic cursor drift, card-stack scaling
+   — these are set inline by JS on mousemove/scroll; !important overrides them */
+    .tarot-card,
+    .sword-magnet,
+    .case-card {
+      transform: none !important;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    /* Flatten every hover lift to a plain color change */
+    .btn:hover,
+    .btn-gold:hover,
+    .btn-view-case:hover,
+    .case-card:hover .case-preview img,
+    .tarot-card:hover .tarot-card-artwork img {
+      transform: none !important;
+    }
+
+    /* Show the character-scrub hero text fully lit instead of scroll-revealed */
+    .char-text .u {
+      opacity: 1 !important;
+    }
+
+    /* Shorten hover/UI transitions only — don't touch animation-duration globally */
+    a, button, .btn, .tarot-card, .case-card, .btn-view-case {
+      transition-duration: 0.15s !important;
+    }
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: var(--bg-deep);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-ring {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--gold-border);
+  border-top-color: var(--gold-primary);
+  animation: loaderSpin 0.9s linear infinite;
+}
+@keyframes loaderSpin { to { transform: rotate(360deg); } }
+.loader-mark {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  color: var(--gold-primary);
+  text-transform: uppercase;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-ring { animation: none; border-top-color: var(--gold-primary); }
+}
+
+  </style>
+</head>
+
+<body>
+
+  <div id="pageLoader" class="page-loader" aria-hidden="true">
+    <div class="loader-ring"></div>
+    <div class="loader-mark">✦ POLARIS ✦</div>
+  </div>
+
+  <!-- Accessible Keyboard Skip-to-Content Link -->
+  <a class="skip-link" href="#top" data-i18n="skipLink">Skip to content</a>
+
+  <div class="starfield-bg"></div>
+
+  <div id="root">
+
+    <!-- ==========================================
+       HEADER & NAVIGATION
+       ========================================== -->
+    <header class="header-nav reveal" style="--ry:-20px; --d:0s" aria-label="Main Navigation">
+      <a class="nav-brand" href="#top">
+        <img class="nav-brand-logo" src="polaris-logo.png" alt="Polaris Swords Logo" onerror="this.src='logo.png'" />
+        <div class="nav-brand-text">
+          <span class="brand-title" data-i18n="brandTitle">POPolarisLARIS</span>
+          <span class="brand-subtitle" data-i18n="brandSuit">✦ SWORDS ✦</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" aria-label="Sections">
+        <a class="nav-item" href="#top" data-i18n="navHome">HOME</a>
+        <a class="nav-item" href="#swords" data-i18n="navSwords">SUIT OF SWORDS</a>
+        <a class="nav-item" href="#about" data-i18n="navPhilosophy">PHILOSOPHY</a>
+        <a class="nav-item" href="#work" data-i18n="navWork">CASES</a>
+        <a class="nav-item" href="#contact" data-i18n="navContact">CONTACT</a>
+      </nav>
+
+      <div class="nav-controls">
+        <!-- Dark / Light Theme Toggle -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle dark/light theme"
+          title="Toggle theme">
+          <svg id="themeIconSun" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+
+        <!-- Separate Clean Language Toggle -->
+        <div class="lang-pill" role="group" aria-label="Language selector">
+          <button class="lang-btn active" id="btnLangEn" type="button">EN</button>
+          <button class="lang-btn" id="btnLangFa" type="button">FA</button>
+        </div>
+
+        <!-- Mobile Hamburger Menu Button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Toggle navigation drawer"
+          aria-expanded="false" aria-controls="mobileDrawer" title="Menu">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Glassmorphic Navigation Drawer -->
+    <div class="mobile-menu-drawer" id="mobileDrawer" aria-label="Mobile Navigation">
+      <a class="mobile-drawer-item" href="#top" data-i18n="navHome">HOME</a>
+      <a class="mobile-drawer-item" href="#swords" data-i18n="navSwords">SUIT OF SWORDS</a>
+      <a class="mobile-drawer-item" href="#about" data-i18n="navPhilosophy">PHILOSOPHY</a>
+      <a class="mobile-drawer-item" href="#work" data-i18n="navWork">CASES</a>
+      <a class="mobile-drawer-item" href="#contact" data-i18n="navContact">CONTACT</a>
+    </div>
+
+
+    <!-- ==========================================
+       HERO SECTION (3-Column Layout from Mockup)
+       ========================================== -->
+    <section class="hero" id="top">
+      <div class="hero-grid">
+
+        <!-- Left Column: Title & Manifesto (No personal names) -->
+        <div class="hero-left reveal" style="--rx:-30px; --d:0.15s">
+          <h1 class="hero-main-title gold-heading" data-i18n="heroTitle">
+            POLARIS<br>SWORDS
+          </h1>
+
+          <div class="hero-subhead" data-i18n="heroSubtitle">
+            Core software engineering and automation.
+          </div>
+
+          <div class="hero-desc" data-i18n="heroDesc">
+            We are the engineering group of Polaris Team. We build backend systems, automated data workflows, and web
+            applications designed to run reliably in production.
+          </div>
+
+          <div class="hero-cta-group">
+            <a class="btn btn-gold" href="#work" data-i18n="btnWork">
+              <span>VIEW WORK</span>
+              <span>✦</span>
+            </a>
+            <a class="btn btn-gold-outline" href="#about" data-i18n="btnPhilosophy">
+              <span>OUR PHILOSOPHY</span>
+              <span>✦</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Center Column: Centerpiece Celestial Sword (Magnetic Physics) -->
+        <div class="hero-center reveal" style="--ry:40px; --d:0.3s">
+          <div class="astronomical-ring ring-outer"></div>
+          <div class="astronomical-ring ring-mid"></div>
+          <div class="astronomical-ring ring-inner"></div>
+
+          <div class="sword-portal-wrap">
+            <div class="sword-magnet" id="magnet" data-padding="160" data-strength="3">
+              <div class="sword-nebula-glow"></div>
+              <!-- High-Res Transparent Sword Centerpiece -->
+              <img class="sword-artwork" src="sword.png" alt="Polaris Celestial Sword of Clarity"
+                onerror="this.onerror=null; this.src='assets/hero_sword.png';" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Framed Polaris Team Suit Card -->
+        <div class="hero-right reveal" style="--rx:30px; --d:0.45s">
+          <div class="hero-card-frame">
+            <div class="hero-card-inner">
+              <img class="card-emblem-logo" src="polaris-logo.png" alt="Polaris Crest" onerror="this.src='logo.png'" />
+              <h2 class="card-team-title" data-i18n="cardTitle">
+                POLARIS<br>TEAM SUIT
+              </h2>
+              <div class="card-suit-badge" data-i18n="cardSuit">
+                SWORDS SUIT
+              </div>
+              <div class="card-motto" data-i18n="cardMotto">
+                Production software and systems
+              </div>
+              <div class="card-sword-medallion">
+                <img src="sword.png" alt="Sword emblem" onerror="this.src='logo.png'" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+       SUIT OF SWORDS SECTION (#swords)
+       (Dedicated Swords Tarot Cards: Ace, Two/Page, Knight, Queen)
+       ========================================== -->
+    <section class="arcana-section" id="swords">
+      <div class="section-divider"></div>
+      <div class="section-header reveal" style="--ry:25px">
+        <h2 class="section-title">
+          <span class="star">✦</span>
+          <span data-i18n="swordsSectionTitle">SUIT OF SWORDS</span>
+          <span class="star">✦</span>
+        </h2>
+        <span class="section-subtitle" data-i18n="swordsSectionSub">Team roles and technical focus areas</span>
+      </div>
+
+      <div class="arcana-grid">
+
+        <!-- Card 1: Ace of Swords (Core Fullstack Engine) -->
+        <article class="tarot-card reveal" style="--ry:35px; --d:0.1s">
+          <div class="tarot-card-artwork">
+            <img loading="lazy" src="ace.jpg" alt="Ace of Swords Tarot Card" />
+          </div>
+          <div class="tarot-card-details">
+            <h3 class="tarot-card-title" data-i18n="card1Title">ACE OF SWORDS</h3>
+            <div class="tarot-card-role" data-i18n="card1Role">FULLSTACK WEB</div>
+            <p class="tarot-card-desc" data-i18n="card1Desc">
+              Web applications built with Django and Next.js, focusing on clean database design, fast APIs, and
+              responsive interfaces.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 2: Page of Swords (The Sentinel / Cyber Security) -->
+        <article class="tarot-card reveal" style="--ry:35px; --d:0.2s">
+          <div class="tarot-card-artwork">
+            <img loading="lazy" src="page.JPG" alt="Page of Swords Tarot Card" onerror="this.src='two.jpg';" />
+          </div>
+          <div class="tarot-card-details">
+            <h3 class="tarot-card-title" data-i18n="card2Title">PAGE OF SWORDS</h3>
+            <div class="tarot-card-role" data-i18n="card2Role">SECURITY & AUDITING</div>
+            <p class="tarot-card-desc" data-i18n="card2Desc">
+              Code audits, zero-trust access control, and proactive security checks to find and fix vulnerabilities
+              before deployment.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 3: Knight of Swords (The Automator / Python & Data) -->
+        <article class="tarot-card reveal" style="--ry:35px; --d:0.3s">
+          <div class="tarot-card-artwork">
+            <img loading="lazy" src="knight.jpg" alt="Knight of Swords Tarot Card" />
+          </div>
+          <div class="tarot-card-details">
+            <h3 class="tarot-card-title" data-i18n="card3Title">KNIGHT OF SWORDS</h3>
+            <div class="tarot-card-role" data-i18n="card3Role">AUTOMATION & DATA</div>
+            <p class="tarot-card-desc" data-i18n="card3Desc">
+              Python scripts and automated workers that process data feeds, handle scheduled tasks, and monitor system
+              metrics.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 4: Queen of Swords (The Crafter & AI) -->
+        <article class="tarot-card reveal" style="--ry:35px; --d:0.4s">
+          <div class="tarot-card-artwork">
+            <img loading="lazy" src="king.jpg" alt="Queen of Swords Tarot Card" />
+          </div>
+          <div class="tarot-card-details">
+            <h3 class="tarot-card-title" data-i18n="card4Title">QUEEN OF SWORDS</h3>
+            <div class="tarot-card-role" data-i18n="card4Role">APPLIED AI & UI</div>
+            <p class="tarot-card-desc" data-i18n="card4Desc">
+              Integrating AI models into practical tools, coupled with clean frontend components and reliable cloud
+              connections.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 5: Ten of Swords (The Architect / Distributed Systems & Infra) -->
+        <article class="tarot-card reveal" style="--ry:35px; --d:0.5s">
+          <div class="tarot-card-artwork">
+            <img loading="lazy" src="ten.jpg" alt="Ten of Swords Tarot Card" />
+          </div>
+          <div class="tarot-card-details">
+            <h3 class="tarot-card-title" data-i18n="card5Title">TEN OF SWORDS</h3>
+            <div class="tarot-card-role" data-i18n="card5Role">BACKEND & INFRASTRUCTURE</div>
+            <p class="tarot-card-desc" data-i18n="card5Desc">
+              High-throughput backend services and distributed infrastructure built with Go and Python, specializing in
+              PostgreSQL, mesh networking, automated crawlers, and LLM pipelines.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+       PHILOSOPHY & MANIFESTO (#about)
+       (Preserved Character-by-Character Scroll Reveal)
+       ========================================== -->
+    <section class="philosophy-section" id="about">
+      <div class="suit-pill reveal" style="--ry:20px; --d:0s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <path d="M14.5 17.5 3 6V3h3l11.5 11.5" />
+          <path d="m13 19 6-6" />
+          <path d="m16 16 4 4" />
+          <path d="m19 21 2-2" />
+        </svg>
+        <span data-i18n="suitPill">Polaris Team · Swords Suit</span>
+      </div>
+
+      <div class="reveal" style="--ry:30px; --d:0.1s">
+        <p class="char-text" id="charText">
+          We believe good engineering is direct, readable, and easy to maintain. We build software that solves real
+          operational bottlenecks without adding layers of unnecessary tooling.
+        </p>
+      </div>
+
+      <div class="reveal" style="--ry:25px; --d:0.25s; margin-top: 48px;">
+        <a class="btn btn-gold" href="#contact" data-i18n="btnInitiate">
+          <span>CONTACT THE TEAM</span>
+          <span>✦</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==========================================
+       SELECTED WORK / CASES (#work)
+       (Preserved Sticky Card Stacking Motion)
+       ========================================== -->
+    <section class="cases-section" id="work">
+      <div class="section-divider"></div>
+      <div class="section-header reveal" style="--ry:25px">
+        <h2 class="section-title">
+          <span class="star">✦</span>
+          <span data-i18n="casesTitle">SELECTED WORK / CASES</span>
+          <span class="star">✦</span>
+        </h2>
+        <span class="section-subtitle" data-i18n="casesSub">Recent applications and systems in production</span>
+      </div>
+
+      <div class="stack-container" id="stack">
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:0">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">01</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case1Name"></h3>
+                </div>
+              </div>
+              <span class="case-confidential-badge">
+                <span class="i-en">Confidential — Client NDA</span><span class="i-fa">محرمانه — قرارداد عدم‌افشا</span>
+              </span>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case1Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-26_22-49-43.jpg" alt="Data Sentinel Case Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:1">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">02</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case2Name"></h3>
+                </div>
+              </div>
+              <a class="btn-view-case" href="https://rimelcosmetics.ir/" data-i18n="viewCase">VIEW CASE →</a>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case2Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-26_23-32-00.jpg" alt="System Architecture Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">03</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case3Name"></h3>
+                </div>
+              </div>
+              <span class="case-confidential-badge">
+                <span class="i-en">Confidential — Client NDA</span><span class="i-fa">محرمانه — قرارداد عدم‌افشا</span>
+              </span>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case3Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-26_23-56-34.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">04</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case4Name"></h3>
+                </div>
+              </div>
+              <span class="case-confidential-badge">
+                <span class="i-en">Confidential — Client NDA</span><span class="i-fa">محرمانه — قرارداد عدم‌افشا</span>
+              </span>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case4Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-27_15-13-44.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">05</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case5Name"></h3>
+                </div>
+              </div>
+              <span class="case-confidential-badge">
+                <span class="i-en">Confidential — Client NDA</span><span class="i-fa">محرمانه — قرارداد عدم‌افشا</span>
+              </span>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case5Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-27_16-53-17.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">06</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case6Name"></h3>
+                </div>
+              </div>
+              <span class="case-confidential-badge">
+                <span class="i-en">Confidential — Client NDA</span><span class="i-fa">محرمانه — قرارداد عدم‌افشا</span>
+              </span>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case6Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-27_16-53-38.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">07</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case7Name"></h3>
+                </div>
+              </div>
+              <a class="btn-view-case" href="https://gallerychiic.com/" data-i18n="viewCase">VIEW CASE →</a>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case7Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-27_16-56-25.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">08</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case8Name"></h3>
+                </div>
+              </div>
+              <a class="btn-view-case" href="https://jrfit.ir/" data-i18n="viewCase">VIEW CASE →</a>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case8Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-27_16-57-47.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">09</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case9Name"></h3>
+                </div>
+              </div>
+              <a class="btn-view-case" href="https://apps.cadinu.io/" data-i18n="viewCase">VIEW CASE →</a>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case9Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-27_16-58-36.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">10</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case10Name"></h3>
+                </div>
+              </div>
+              <a class="btn-view-case" href="https://t.me/TiCkTOM_bot" data-i18n="viewCase">VIEW CASE →</a>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case10Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-27_17-00-00.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">11</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case11Name"></h3>
+                </div>
+              </div>
+              <a class="btn-view-case" href="https://avcafebakery.vercel.app/" data-i18n="viewCase">VIEW CASE →</a>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case11Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="photo_2026-08-27_17-01-35.jpg" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="case-card-wrap">
+          <article class="case-card" style="--i:2">
+            <div class="case-header">
+              <div class="case-meta">
+                <div class="case-index">12</div>
+                <div class="case-titles">
+                  <h3 class="case-name" data-i18n="case12Name"></h3>
+                </div>
+              </div>
+                            <a class="btn-view-case" href="Mini-Editor.zip" data-i18n="viewCase">VIEW CASE →</a>
+            </div>
+
+            <div class="case-body-grid">
+              <div class="case-desc-wrap">
+                <p class="case-desc" data-i18n="case12Desc">
+                </p>
+                <div class="case-tech-tags">
+                </div>
+              </div>
+              <div class="case-preview">
+                <img loading="lazy" src="2026-08-28 08-51-27.png" alt="Process Automation Preview" />
+              </div>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+       MARQUEE SHOWCASE (Preserved Continuous Dual Loop)
+       ========================================== -->
+    <section class="marquee-wrap" id="marquee" aria-hidden="true">
+      <div class="mq-row reverse" id="mqRow1"></div>
+      <div class="mq-row" id="mqRow2"></div>
+    </section>
+
+    <!-- ==========================================
+       TRANSMISSION / CONTACT PORTAL (#contact)
+       ========================================== -->
+    <section class="contact-section" id="contact">
+      <div class="section-divider"></div>
+      <div class="section-header reveal" style="--ry:25px">
+        <h2 class="section-title">
+          <span class="star">✦</span>
+          <span data-i18n="contactSectionTitle">GET IN TOUCH</span>
+          <span class="star">✦</span>
+        </h2>
+        <span class="section-subtitle" data-i18n="contactSectionSub">Send a project inquiry or message to our
+          developers</span>
+      </div>
+
+      <div class="contact-card reveal" style="--ry:30px; --d:0.15s">
+        <!-- Contact Form -->
+        <form class="contact-form" id="contactForm">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="formIdentity" data-i18n="labelIdentity">NAME OR ORGANIZATION</label>
+              <input class="form-input" id="formIdentity" type="text" required placeholder="e.g. Your Name / Company"
+                data-i18n-ph="phIdentity" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formEndpoint" data-i18n="labelEndpoint">EMAIL OR TELEGRAM</label>
+              <input class="form-input" id="formEndpoint" type="text" required
+                placeholder="username@domain.com or @telegram" data-i18n-ph="phEndpoint" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="formArchetype" data-i18n="labelArchetype">AREA OF INTEREST</label>
+            <select class="form-select" id="formArchetype">
+              <option value="all" data-i18n="optAll">✦ All Areas / General Project</option>
+              <option value="sword_01" data-i18n="opt1">✦ Fullstack Web (Django / Next.js)</option>
+              <option value="sword_02" data-i18n="opt2">✦ Security & Code Audit</option>
+              <option value="sword_03" data-i18n="opt3">✦ Automation & Python Workers</option>
+              <option value="sword_04" data-i18n="opt4">✦ AI Integration & Web UI</option>
+              <option value="sword_10" data-i18n="opt5">✦ Distributed Infra & Backend (Go / Python / Mesh)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="formDirective" data-i18n="labelDirective">PROJECT DETAILS</label>
+            <textarea class="form-textarea" id="formDirective" required
+              placeholder="Tell us about what you want to build, current technical requirements, or timeline..."
+              data-i18n-ph="phDirective"></textarea>
+          </div>
+
+          <div class="form-submit-wrap">
+            <div class="form-status-note">
+              <span class="pulse-dot"></span>
+              <span data-i18n="commStatus">Direct channel to engineering team</span>
+            </div>
+
+            <button class="btn btn-gold" id="btnSubmitForm" type="submit">
+              <span id="btnSubmitText" data-i18n="btnTransmit">SEND MESSAGE</span>
+              <span id="btnSubmitIcon">✦</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Simulated Success Feedback -->
+        <div class="form-success-box" id="formSuccessBox" role="status" aria-live="polite">
+          <div class="success-emblem">✦</div>
+          <h3 class="success-title" data-i18n="successTitle">MESSAGE RECEIVED</h3>
+          <p class="success-desc" data-i18n="successDesc">
+            Thank you for reaching out. A team member will review your note and respond via your contact channel
+            shortly.
+          </p>
+          <button class="btn btn-gold-outline" id="btnSendAnother" type="button" style="margin-top: 10px;">
+            <span data-i18n="btnAnother">SEND ANOTHER MESSAGE</span>
+            <span>✦</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+       FOOTER SECTION
+       ========================================== -->
+    <footer class="footer-section">
+      <div class="footer-logo-wrap reveal" style="--ry:20px">
+        <img id="footer-logo" src="polaris-logo.png" alt="Polaris Swords Crest" onerror="this.src='logo.png'" />
+      </div>
+
+      <h3 class="footer-title gold-heading reveal" style="--ry:20px; --d:0.1s" data-i18n="footerTitle">
+        POLARIS / SWORDS
+      </h3>
+      <p class="footer-subtitle reveal" style="--ry:20px; --d:0.15s" data-i18n="footerSuit">
+        Engineering suit of Polaris Team
+      </p>
+
+      <div class="footer-meta-tags reveal" style="--ry:20px; --d:0.25s" data-i18n="footerMeta">
+        <span>Polaris Team</span>
+        <span>✦</span>
+        <span>Swords Suit</span>
+        <span>✦</span>
+        <span>✦</span>
+        <span>Minor Arcana</span>
+      </div>
+    </footer>
+
+    <!-- ==========================================
+       MOBILE BOTTOM NAVIGATION DOCK
+       ========================================== -->
+    <nav class="mobile-nav-dock" aria-label="Mobile Dock">
+      <a class="dock-item active" href="#top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span data-i18n="dockHome">HOME</span>
+      </a>
+      <a class="dock-item" href="#swords">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        <span data-i18n="dockSwords">SWORDS</span>
+      </a>
+      <a class="dock-item" href="#about">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+        <span data-i18n="dockAbout">ABOUT</span>
+      </a>
+      <a class="dock-item" href="#work">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+        <span data-i18n="dockWork">WORK</span>
+      </a>
+      <a class="dock-item" href="#contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect width="20" height="16" x="2" y="4" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+        <span data-i18n="dockContact">CONTACT</span>
+      </a>
+    </nav>
+
+    <!-- ==========================================
+       SCROLL TO TOP BUTTON
+       ========================================== -->
+    <button class="scroll-to-top-btn" id="scrollToTopBtn" type="button" aria-label="Scroll to top"
+      title="Scroll to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+        stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15" />
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- ==========================================================================
+     INTERACTIVE JAVASCRIPT & MOTION ENGINE
+     ========================================================================== */
+-->
+  <script>
+    (function () {
+      'use strict';
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var pageLoader = document.getElementById('pageLoader');
+      function hideLoader() { if (pageLoader) pageLoader.classList.add('hidden'); }
+      window.addEventListener('load', hideLoader);
+      setTimeout(hideLoader, 4000); // safety net — never leaves the visitor stuck if one image hangs
+
+      /* ---------- Clean Separate Bilingual Dictionary (No merging, pure EN or FA) ---------- */
+      var I18N = {
+        en: {
+          skipLink: 'Skip to content',
+          brandTitle: 'POLARIS',
+          brandSuit: '✦ SWORDS ✦',
+          navHome: 'HOME',
+          navSwords: 'SUIT OF SWORDS',
+          navPhilosophy: 'PHILOSOPHY',
+          navWork: 'CASES',
+          navContact: 'CONTACT',
+          heroTitle: 'POLARIS<br>SWORDS',
+          heroSubtitle: 'Core software engineering and automation.',
+          heroDesc: 'We are the engineering group of Polaris Team. We build backend systems, automated data workflows, and web applications designed to run reliably in production.',
+          btnWork: 'VIEW WORK ✦',
+          btnPhilosophy: 'OUR PHILOSOPHY ✦',
+          cardTitle: 'POLARIS<br>TEAM SUIT',
+          cardSuit: 'SWORDS SUIT',
+          cardMotto: 'Production software and systems',
+          swordsSectionTitle: 'SUIT OF SWORDS',
+          swordsSectionSub: 'Team roles and technical focus areas',
+          card1Title: 'ACE OF SWORDS',
+          card1Role: 'FULLSTACK WEB',
+          card1Desc: 'Web applications built with Django and Next.js, focusing on clean database design, fast APIs, and responsive interfaces.',
+          card2Title: 'PAGE OF SWORDS',
+          card2Role: 'SECURITY & AUDITING',
+          card2Desc: 'Code audits, zero-trust access control, and proactive security checks to find and fix vulnerabilities before deployment.',
+          card3Title: 'KNIGHT OF SWORDS',
+          card3Role: 'AUTOMATION & DATA',
+          card3Desc: 'Python scripts and automated workers that process data feeds, handle scheduled tasks, and monitor system metrics.',
+          card4Title: 'QUEEN OF SWORDS',
+          card4Role: 'APPLIED AI & UI',
+          card4Desc: 'Integrating AI models into practical tools, coupled with clean frontend components and reliable cloud connections.',
+          card5Title: 'TEN OF SWORDS',
+          card5Role: 'DISTRIBUTED INFRA & BACKEND',
+          card5Desc: 'High-throughput backend services and distributed infrastructure engineered with Go and Python. Specialized in PostgreSQL scaling, mesh networking, automated crawlers, and LLM orchestration.',
+          suitPill: 'Polaris Team · Swords Suit',
+          aboutText: 'We believe good engineering is direct, readable, and easy to maintain. We build software that solves real operational bottlenecks without adding layers of unnecessary tooling.',
+          btnInitiate: 'CONTACT THE TEAM ✦',
+          casesTitle: 'SELECTED WORK / CASES',
+          casesSub: 'Recent applications and systems in production',
+          case1Cat: 'ANALYTICS PLATFORM',
+          case1Name: 'WATER STATICS MONITORING',
+          case1Desc: 'A nationwide dashboard for monitoring water meter data, developed in Python using Pandas for data processing and analysis and Streamlit for the web- based user interface.It is planned to be deployed on a VPS.',
+          case2Cat: 'BACKEND PLATFORM',
+          case2Name: 'COSMETICS RIMEL',
+          case2Desc: 'A cream-themed UI featuring product categories, campaigns, and an e-commerce dashboard. In short, an online cosmetics store with a product catalog, shopping cart, category landing pages, and a store management panel, allowing products to be updated without constant reliance on a developer.',
+          case3Cat: 'AUTOMATION SERVICE',
+          case3Name: 'SEPIDAR SAZE — CORPORATE WEBSITE',
+          case3Desc: 'Design and development of a corporate website for a company specializing in the design and construction of villas and building structures.The project is being developed using WordPress and Elementor and includes sections for services, projects, portfolio, and company information.',
+          case4Cat: 'AUTOMATION SERVICE',
+          case4Name: 'ARCO PAL CITY - E COMMERCE WEBSITE',
+          case4Desc: 'Design and development of a corporate website for a company specializing in the design and construction of villas and building structures.The project is being developed using WordPress and Elementor and includes sections for services, projects, portfolio, and company information.',
+          case5Cat: 'AUTOMATION SERVICE',
+          case5Name: 'ZARRIN KAVOSH KIAN',
+          case5Desc: 'Design and development of a corporate website for a company specializing in the design and construction of villas and building structures.The project is being developed using WordPress and Elementor and includes sections for services, projects, portfolio, and company information.',
+          case6Cat: 'AUTOMATION SERVICE',
+          case6Name: 'VERIFIER HYDROPUMP',
+          case6Desc: 'Design and development of a corporate website for a company specializing in the design and construction of villas and building structures.The project is being developed using WordPress and Elementor and includes sections for services, projects, portfolio, and company information.',
+          case7Cat: 'AUTOMATION SERVICE',
+          case7Name: 'CHIC GALLERY',
+          case7Desc: 'Lifestyle & Home Décor Store - A soft cream-themed UI featuring product categories and an Instagram CTA. Summary: A stylish gallery selling candles, ceramics, and home décor objects with an editorial storefront feel—featuring a product grid, trust-building sections, and a mobile-friendly shopping experience.',
+          case8Cat: 'AUTOMATION SERVICE',
+          case8Name: 'JR FIT',
+          case8Desc: 'Fitness Brand Website & Store - Sports supplements, workout plans, and gym services. Summary: JR Fit combines a sports supplement store with training programs and brand storytelling in a dark, energetic UI.',
+          case9Cat: 'AUTOMATION SERVICE',
+          case9Name: 'CADINU APPS',
+          case9Desc: 'CadinuSwap Ecosystem - MultiSwap, farming, staking, lottery, NFTs, and governance. Summary: Cadinu Hub is a multi-module DeFi dApp ecosystem featuring token swaps, liquidity farming, staking, a lottery, NFT showcases, a locking tool, trading competitions, and community governance—with a multilingual interface and wallet connectivity for the CADINU ecosystem.',
+          case10Cat: 'AUTOMATION SERVICE',
+          case10Name: 'TICKTOM',
+          case10Desc: 'Telegram Mini App Game (TickTOM Universe) A space-themed interface with TON branding. Summary: TickTOM Universe is a Telegram Mini App game featuring a dark cosmic aesthetic, a character-focused hero section, and an in-messenger asset-loading experience.',
+          case11Cat: 'AUTOMATION SERVICE',
+          case11Name: 'AV BAKERY CAFE',
+          case11Desc: 'Shiraz Café & Bakery Website - A Persian menu, events, and visitor information with a warm brick-inspired brand identity. Summary: AV Café Bakery is a one-page brand website for a café and bakery in Shiraz (Behesht Boulevard), featuring a storytelling hero section, hot and cold drinks, a bakery menu with prices, events, opening hours, a map, and an Instagram CTA—using a cream and brick color palette, Vazirmatn and a display font, and a mobile-friendly takeaway-focused experience.',
+          case12Cat: 'AUTOMATION SERVICE',
+          case12Name: 'MINIEDITOR - PYTHON TEXT EDITOR',
+          case12Desc: 'A lightweight, multi-tab code editor built entirely from scratch in Python and Tkinter — no Electron, no web view, just native desktop widgets and a hand-built syntax highlighting engine.',
+          viewCase: 'VIEW CASE →',
+          footerTitle: 'POLARIS / SWORDS',
+          footerSuit: 'Engineering suit of Polaris Team',
+          footerMeta: '<span>Polaris Team</span><span>✦</span><span>Swords Suit</span><span>✦</span><span>Minor Arcana</span>',
+          dockHome: 'HOME',
+          dockSwords: 'SWORDS',
+          dockAbout: 'ABOUT',
+          dockWork: 'WORK',
+          dockContact: 'CONTACT',
+          contactSectionTitle: 'GET IN TOUCH',
+          contactSectionSub: 'Send a project inquiry or message to our developers',
+          labelIdentity: 'NAME OR ORGANIZATION',
+          phIdentity: 'e.g. Your Name / Company',
+          labelEndpoint: 'EMAIL OR TELEGRAM',
+          phEndpoint: 'username@domain.com or @telegram',
+          labelArchetype: 'AREA OF INTEREST',
+          optAll: '✦ All Areas / General Project',
+          opt1: '✦ Fullstack Web (Django / Next.js)',
+          opt2: '✦ Security & Code Audit',
+          opt3: '✦ Automation & Python Workers',
+          opt4: '✦ AI Integration & Web UI',
+          opt5: '✦ Distributed Infra & Backend (Go / Python / Mesh)',
+          labelDirective: 'PROJECT DETAILS',
+          phDirective: 'Tell us about what you want to build, current technical requirements, or timeline...',
+          commStatus: 'Direct channel to engineering team',
+          btnTransmit: 'SEND MESSAGE',
+          successTitle: 'MESSAGE RECEIVED',
+          successDesc: 'Thank you for reaching out. A team member will review your note and respond via your contact channel shortly.',
+          btnAnother: 'SEND ANOTHER MESSAGE'
+        },
+        fa: {
+          skipLink: 'پرش به محتوای اصلی',
+          brandTitle: 'پولاریس',
+          brandSuit: '✦ خال شمشیرها ✦',
+          navHome: 'خانه',
+          navSwords: 'خال شمشیرها',
+          navPhilosophy: 'فلسفه ما',
+          navWork: 'پرونده‌ها',
+          navContact: 'تماس',
+          heroTitle: 'پولاریس <br>شمشیرها',
+          heroSubtitle: 'مهندسی نرم‌افزار، زیرساخت وب و اتوماسیون.',
+          heroDesc: 'ما بخش مهندسی تیم پولاریس هستیم؛ تمرکز ما توسعه بک‌اند، خودکارسازی جریان‌های کاری داده و ساخت وب‌اپلیکیشن‌های پایدار برای استفاده واقعی است.',
+          btnWork: 'مشاهده پروژه‌ها ✦',
+          btnPhilosophy: 'فلسفه ما ✦',
+          cardTitle: 'تیم پولاریس<br>خال شمشیرها',
+          cardSuit: 'خال شمشیرها',
+          cardMotto: 'توسعه نرم‌افزار و پایداری سیستم',
+          swordsSectionTitle: 'خال شمشیرها',
+          swordsSectionSub: 'نقش‌های تخصصی و حوزه‌های کاری اعضای تیم',
+          card1Title: 'آس شمشیرها',
+          card1Role: 'توسعه فول‌استک وب',
+          card1Desc: 'توسعه وب با جنگو و Next.js، با تمرکز بر ساختار تمیز دیتابیس، APIهای سریع و رابط‌های کاربری بهینه.',
+          card2Title: 'دیده‌بان شمشیر‌ها',
+          card2Role: 'امنیت و پایش سیستم',
+          card2Desc: 'بازبینی امنیتی کدها، پیاده‌سازی دسترسی صفر‌اعتماد (Zero-Trust) و رفع آسیب‌پذیری‌ها پیش از انتشار نهایی.',
+          card3Title: 'شوالیه شمشیرها',
+          card3Role: 'اتوماسیون و جریان داده',
+          card3Desc: 'اسکریپت‌های پایتون و صف‌های پردازشی برای انتقال و تبدیل خودکار داده‌ها و مانیتورینگ منظم سرویس‌ها.',
+          card4Title: 'ملکه شمشیرها',
+          card4Role: 'هوش مصنوعی کاربردی و رابط کاربری',
+          card4Desc: 'اتصال مدل‌های هوش مصنوعی به ابزارهای کاربردی روزمره، طراحی کامپوننت‌های مدرن و ارتباط با سرویس‌های ابری.',
+          card5Title: 'ده شمشیر',
+          card5Role: 'زیرساخت توزیع‌شده و بک‌اند',
+          card5Desc: 'توسعه سیستم‌های پرسرعت بک‌اند و زیرساخت توزیع‌شده با Go و پایتون؛ متخصص پایگاه‌داده PostgreSQL، شبکه‌های مِش، خزنده‌های خودکار و ابزارهای هوش مصنوعی LLM.',
+          suitPill: 'تیم پولاریس · خال شمشیرها',
+          aboutText: 'دیدگاه ما در مهندسی نرم‌افزار سادگی، خوانایی کد و نگهداری آسان است. ما ابزارهایی می‌سازیم که مشکلات واقعی کار را حل کنند و سیستم را بدون پیچیدگی بیهوده پایدار نگه دارند.',
+          btnInitiate: 'گفتگو با تیم ✦',
+          casesTitle: 'نمونه‌کارها و پروژه‌ها',
+          casesSub: 'سامانه‌ها و پروژه‌های اجرا شده در محیط عملیاتی',
+          case1Cat: 'پلتفرم مانیتورینگ',
+          case1Name: 'مانیتورینگ داده های آبی',
+          case1Desc: 'داشبورد مانیتورینگ داده های کنتورهای آب در سطح کشور، \nبا پایتون توسعه داده شده و از pandas برای پردازش و تحلیل داده و Streamlit برای رابط کاربری وب استفاده می‌کنه. برای دیپلوی هم قراره روی یک VPS مستقر بشه.',
+          case2Cat: 'زیرساخت بک‌اند',
+          case2Name: 'ریمل کازمتیکس',
+          case2Desc: 'فروشگاه زیبایی — UI کرم، دسته‌بندی محصول، کمپین و پنل فروشگاهی. خلاصه فروشگاه آنلاین آرایشی: کاتالوگ، سبد، لندینگ دسته، و پنل فروشگاهی تا به‌روزرسانی محصول بدون وابستگی دائمی به برنامه‌نویس باشد.استکWordPress | WooCommerce',
+          case3Cat: 'سرویس خودکارسازی',
+          case3Name: ' سایت شرکتی | سازه سپیدار',
+          case3Desc: ' طراحی و پیاده‌سازی وب‌سایت شرکتی برای مجموعه فعال در زمینه طراحی و اجرای ویلا و سازه‌های ساختمانی. پروژه با WordPress و Elementor در حال توسعه است و شامل معرفی خدمات، پروژه‌ها، نمونه‌کارها و اطلاعات مجموعه می‌باشد.',
+          case4Cat: 'سرویس خودکارسازی',
+          case4Name: 'آرکوپال سیتی - وبسایت E COMMERCE',
+          case4Desc: 'طراحی و پیاده‌سازی فروشگاه اینترنتی در حوزه لوازم آشپزخانه و ظروف پذیرایی، شامل دسته‌بندی محصولات، محصولات ویژه، تخفیف‌ها، برندها و بخش‌های فروشگاهی.',
+          case5Cat: 'سرویس خودکارسازی',
+          case5Name: ' سایت شرکتی | زرین کاوش کیان',
+          case5Desc: 'طراحی و پیاده‌سازی یک وب‌سایت شرکتی برای مجموعه فعال در حوزه حفاری، اکتشاف و صنایع معدنی و صنعتی. این پروژه با WordPress و Elementor در حال توسعه است و شامل بخش‌هایی مانند معرفی شرکت، خدمات، پروژه‌ها، تجهیزات، محصولات و مقالات خواهد بود.',
+          case6Cat: 'سرویس خودکارسازی',
+          case6Name: 'هیدروپمپ وریفایر',
+          case6Desc: 'یک ابزار دسکتاپ توسعه‌یافته با پایتون است که فایل‌های شبکه توزیع آب (INP) را با خروجی‌های شبیه‌ساز EPANET مطابقت داده و اعتبارسنجی می‌کند. مهندسی به‌کاررفته در این ابزار، ترکیبی کاربردی از مهندسی عمران (هیدرولیک و منابع آب) برای تحلیل رفتار سیال و شبکه‌های آبرسانی، در کنار مهندسی نرم‌افزار و پردازش داده جهت اتوماسیون محاسبات و توسعه رابط کاربری (GUI) است.',
+          case7Cat: 'سرویس خودکارسازی',
+          case7Name: 'گالری شیک',
+          case7Desc: 'فروشگاه سبک زندگی دکوراسیون — UI کرم ملایم، دسته‌بندی، CTA اینستاگرام. خلاصه: گالری شیک شمع، سرامیک و اشیاء خانه را با حس ویترین ادیتوریال می‌فروشد — شبکه محصول، بلوک اعتماد و خرید موبایل‌فرندلی.',
+          case8Cat: 'سرویس خودکارسازی',
+          case8Name: 'جی‌آر فیت',
+          case8Desc: 'سایت و فروشگاه برند تناسب‌اندام — مکمل، برنامه تمرینی و خدمات باشگاه. خلاصه: جی‌آر فیت فروشگاه مکمل ورزشی را با برنامه تمرینی و استوری برند روی UI تیره و پرانرژی ترکیب می‌کند.',
+          case9Cat: 'سرویس خودکارسازی',
+          case9Name: 'کادینو اپس',
+          case9Desc: 'اکوسیستم CadinuSwap — MultiSwap، فارم، استیکینگ، لاتاری، NFT و حاکمیت. خلاصه: اپ‌های کادینو هاب dApp چندماژوله دیفای است: سواپ، فارم نقدینگی، استیکینگ، لاتاری، معرفی NFT، ابزار قفل، رقابت ترید و حاکمیت جامعه — رابط چندزبانه با اتصال کیف‌پول برای اکوسیستم CADINU.',
+          case10Cat: 'سرویس خودکارسازی',
+          case10Name: 'تیک‌تام',
+          case10Desc: 'بازی مینی‌اپ تلگرام (TickTOM Universe) — رابط فضایی با برند TON. خلاصه: تیک‌تام بازی مینی‌اپ تلگرام (TickTOM Universe) است: زیبایی‌شناسی کیهانی تیره، صفحه هیرو کاراکتر، و جریان لود دارایی داخل مسنجر.',
+          case11Cat: 'سرویس خودکارسازی',
+          case11Name: 'کافه بیکری AV',
+          case11Desc: 'سایت کافه بیکری شیراز — منوی فارسی، برنامه‌ها و اطلاعات مراجعه با برند گرم آجری. خلاصه: کافه بیکری AV سایت یک‌صفحه‌ای برند برای کافه بیکری شیراز (بلوار بهشت) است: هیرو داستانی، منوی نوشیدنی گرم/خنک و بیکری با قیمت، برنامه‌ها، ساعت کار، نقشه و CTA اینستاگرام — پالت کرم و آجری، Vazirmatn + فونت نمایشی، و موقعیت تیک‌اوی موبایل‌فرست.',
+          case12Cat: 'سرویس خودکارسازی',
+          case12Name: 'مینی‌ادیتور - ادیتور متن با پایتون',
+          case12Desc: 'یک ویرایشگر کد سبک و چندتب، که از صفر و به‌طور کامل با Python و Tkinter ساخته شده است — بدون Electron، بدون Web View؛ فقط ویجت‌های بومی دسکتاپ و یک موتور هایلایت سینتکس که به‌صورت دستی توسعه داده شده است.',
+          viewCase: 'مشاهده جزئیات ←',
+          footerTitle: 'پولاریس / شمشیرها',
+          footerSuit: 'تیم مهندسی شمشیرها از پولاریس',
+          footerMeta: '<span>تیم پولاریس</span><span>✦</span><span>خال شمشیرها</span><span>✦</span><span>آرکانای صغیر</span>',
+          dockHome: 'خانه',
+          dockSwords: 'شمشیرها',
+          dockAbout: 'فلسفه',
+          dockWork: 'کارها',
+          dockContact: 'تماس',
+          contactSectionTitle: 'ارتباط با تیم',
+          contactSectionSub: 'ارسال پیام یا نیازهای پروژه به تیم شمشیرهای پولاریس',
+          labelIdentity: 'نام یا سازمان شما',
+          phIdentity: 'مثال: نام شما یا شرکت',
+          labelEndpoint: 'ایمیل یا آیدی تلگرام',
+          phEndpoint: 'ایمیل معتبر یا آیدی تلگرام',
+          labelArchetype: 'حوزه نیازمندی پروژه',
+          optAll: '✦ همکاری کلی / تمام حوزه‌ها',
+          opt1: '✦ توسعه فول‌استک وب (جنگو / Next.js)',
+          opt2: '✦ امنیت و بازبینی کدها',
+          opt3: '✦ اتوماسیون و اسکریپت‌های پایتون',
+          opt4: '✦ هوش مصنوعی و رابط کاربری',
+          opt5: '✦ زیرساخت و بک‌اند (Go / شبکه‌های مش)',
+          labelDirective: 'توضیحات پروژه یا پیام شما',
+          phDirective: 'درباره اهداف پروژه، نیازمندی‌های فنی یا زمان‌بندی مورد نظرتان بنویسید...',
+          commStatus: 'ارتباط مستقیم با تیم فنی فعال است',
+          btnTransmit: 'ارسال پیام',
+          successTitle: 'پیام شما با موفقیت ثبت شد',
+          successDesc: 'با تشکر از پیام شما. یکی از اعضای تیم پیام شما را بررسی کرده و به زودی با شما تماس خواهد گرفت.',
+          btnAnother: 'ارسال پیام جدید ✦'
+        }
+      };
+
+      /* ---------- GIF Showcases for Marquee ---------- */
+      var GIFS = [
+        'photo_2026-08-26_22-49-43.jpg',
+        'photo_2026-08-26_23-32-00.jpg',
+        'photo_2026-08-26_23-56-34.jpg',
+        'photo_2026-08-27_15-13-44.jpg',
+        'photo_2026-08-27_16-53-17.jpg',
+        'photo_2026-08-27_16-53-38.jpg',
+        'photo_2026-08-27_16-56-25.jpg',
+        'photo_2026-08-27_16-57-47.jpg',
+        'photo_2026-08-27_16-58-36.jpg',
+        'photo_2026-08-27_17-00-00.jpg',
+        'photo_2026-08-27_17-01-35.jpg'
+      ];
+
+      /* Fill Marquee Rows */
+      function fillRow(el, list) {
+        if (!el) return;
+        var html = '';
+        for (var t = 0; t < 6; t++) {
+          for (var i = 0; i < list.length; i++) {
+            html += '<div class="mq-card"><img loading="lazy" decoding="async" alt="Portfolio showcase" src="' + list[i] + '" /></div>';
+          }
+        }
+        el.innerHTML = html;
+      }
+      fillRow(document.getElementById('mqRow1'), GIFS.slice(0, 6));
+      fillRow(document.getElementById('mqRow2'), GIFS.slice(6));
+
+      function setupConveyor(rowEl, pxPerSecond, direction) {
+        if (!rowEl) return;
+        var cards = Array.prototype.slice.call(rowEl.children);
+        if (!cards.length) return;
+
+        requestAnimationFrame(function () {
+          var cardW = cards[0].offsetWidth;
+          var gap = 16;
+          var step = cardW + gap;
+          var totalWidth = cards.length * step;
+          var offset = 0;
+          var lastTime = null;
+
+          function frame(now) {
+            if (lastTime === null) lastTime = now;
+            var dt = (now - lastTime) / 1000;
+            lastTime = now;
+            offset += pxPerSecond * dt * direction;
+            offset = ((offset % totalWidth) + totalWidth) % totalWidth;
+
+            cards.forEach(function (card, i) {
+              var basePos = i * step;
+              var pos = ((basePos - offset) % totalWidth + totalWidth) % totalWidth;
+              if (pos > totalWidth - step) pos -= totalWidth; // teleport past the edge
+              card.style.transform = 'translate3d(' + pos.toFixed(1) + 'px,0,0)';
+            });
+
+            requestAnimationFrame(frame);
+          }
+          requestAnimationFrame(frame);
+        });
+      }
+
+      if (!reduceMotion) {
+        setupConveyor(document.getElementById('mqRow1'), 18, -1); // drifts left
+        setupConveyor(document.getElementById('mqRow2'), 18, 1);  // drifts right
+      }
+
+      /* ---------- Theme Management (Dark / Light) ---------- */
+      var currentTheme = 'dark';
+      try { currentTheme = localStorage.getItem('polaris-theme') || 'dark'; } catch (e) { }
+
+      var themeToggleBtn = document.getElementById('themeToggleBtn');
+      var themeIconSun = document.getElementById('themeIconSun');
+      var themeIconMoon = document.getElementById('themeIconMoon');
+
+      function applyTheme(theme) {
+        currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'light') {
+          themeIconSun.style.display = 'none';
+          themeIconMoon.style.display = 'block';
+        } else {
+          themeIconSun.style.display = 'block';
+          themeIconMoon.style.display = 'none';
+        }
+        try { localStorage.setItem('polaris-theme', theme); } catch (e) { }
+      }
+      applyTheme(currentTheme);
+
+      themeToggleBtn.addEventListener('click', function () {
+        applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+      });
+
+      /* ---------- Language Switching Logic ---------- */
+      var lang = 'en';
+      try { lang = localStorage.getItem('polaris-lang') === 'fa' ? 'fa' : 'en'; } catch (e) { }
+
+      var btnLangEn = document.getElementById('btnLangEn');
+      var btnLangFa = document.getElementById('btnLangFa');
+      var charText = document.getElementById('charText');
+      var units = [];
+
+      /* Char units: EN = per character, FA = per word (preserves Persian cursive ligatures) */
+      function renderCharText(text, isFa) {
+        if (!charText) return;
+        var html;
+        if (isFa) {
+          html = text.split(' ').map(function (w) {
+            return '<span class="w"><span class="u">' + w + '</span></span>';
+          }).join(' ');
+        } else {
+          html = text.split(' ').map(function (w) {
+            return '<span class="w">' + Array.from(w).map(function (ch) {
+              return '<span class="u">' + ch + '</span>';
+            }).join('') + '</span>';
+          }).join(' ');
+        }
+        charText.innerHTML = html;
+        units = charText.querySelectorAll('.u');
+      }
+
+      function applyLang(l) {
+        lang = l;
+        var d = I18N[l];
+        document.documentElement.lang = l === 'fa' ? 'fa' : 'en';
+        document.documentElement.dir = l === 'fa' ? 'rtl' : 'ltr';
+        document.body.classList.toggle('lang-fa', l === 'fa');
+
+        btnLangEn.classList.toggle('active', l === 'en');
+        btnLangFa.classList.toggle('active', l === 'fa');
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (d[key] != null) el.innerHTML = d[key];
+        });
+
+        document.querySelectorAll('[data-i18n-ph]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n-ph');
+          if (d[key] != null) el.placeholder = d[key];
+        });
+
+        renderCharText(d.aboutText, l === 'fa');
+        try { localStorage.setItem('polaris-lang', l); } catch (e) { }
+        measure();
+        onFrame();
+      }
+
+      btnLangEn.addEventListener('click', function () { applyLang('en'); });
+      btnLangFa.addEventListener('click', function () { applyLang('fa'); });
+
+      /* ---------- Scroll Reveal (IntersectionObserver) ---------- */
+      var revealEls = document.querySelectorAll('.reveal');
+      if (!reduceMotion && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { rootMargin: '60px', threshold: 0.05 });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('in'); });
+      }
+
+      /* ---------- Magnetic Cursor Physics (#magnet) ---------- */
+      var magnet = document.getElementById('magnet');
+      if (magnet && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+        var pad = parseFloat(magnet.dataset.padding) || 160;
+        var strength = parseFloat(magnet.dataset.strength) || 3;
+        document.addEventListener('mousemove', function (ev) {
+          var r = magnet.getBoundingClientRect();
+          var cx = r.left + r.width / 2;
+          var cy = r.top + r.height / 2;
+          var dx = ev.clientX - cx;
+          var dy = ev.clientY - cy;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var maxDist = r.width / 2 + pad;
+          var active = dist < maxDist;
+
+          if (active) {
+            var tiltX = (dy / (r.height / 2)) * -14;
+            var tiltY = (dx / (r.width / 2)) * 14;
+            magnet.style.transition = 'transform 0.22s ease-out';
+            magnet.style.transform = 'translate3d(' + (dx / strength).toFixed(1) + 'px,' + (dy / strength).toFixed(1) + 'px,0) rotateX(' + tiltX.toFixed(1) + 'deg) rotateY(' + tiltY.toFixed(1) + 'deg)';
+          } else {
+            magnet.style.transition = 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)';
+            magnet.style.transform = 'translate3d(0,0,0) rotateX(0deg) rotateY(0deg)';
+          }
+        }, { passive: true });
+      }
+
+      /* ---------- 3D Tilt Hover for Tarot Cards ---------- */
+      if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+        var tarotCards = document.querySelectorAll('.tarot-card');
+        tarotCards.forEach(function (card) {
+          card.addEventListener('mousemove', function (ev) {
+            var rect = card.getBoundingClientRect();
+            var x = ev.clientX - rect.left;
+            var y = ev.clientY - rect.top;
+            var rx = ((y / rect.height) - 0.5) * -12;
+            var ry = ((x / rect.width) - 0.5) * 12;
+            card.style.transform = 'perspective(800px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-8px) scale(1.02)';
+          });
+          card.addEventListener('mouseleave', function () {
+            card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+          });
+        });
+      }
+
+      /* ---------- rAF Scroll Loop: Marquee, Scrub Reveal, Card Stacking ---------- */
+      var marquee = document.getElementById('marquee');
+      var row1 = document.getElementById('mqRow1');
+      var row2 = document.getElementById('mqRow2');
+      var stack = document.getElementById('stack');
+      var cards = stack ? stack.querySelectorAll('.case-card') : [];
+      var mqTop = 0, stackTop = 0, stackRange = 1;
+      var ticking = false;
+
+      function measure() {
+        if (marquee) mqTop = marquee.getBoundingClientRect().top + window.scrollY;
+        if (stack) {
+          stackTop = stack.getBoundingClientRect().top + window.scrollY;
+          stackRange = Math.max(1, stack.offsetHeight - window.innerHeight);
+        }
+      }
+
+      function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+      function onFrame() {
+        ticking = false;
+        var sy = window.scrollY;
+        var vh = window.innerHeight;
+
+        /* 2. Character-by-character scrub text illumination */
+        if (units.length && charText) {
+          var rect = charText.getBoundingClientRect();
+          var p = clamp((vh * 0.82 - rect.top) / (rect.height + vh * 0.6), 0, 1);
+          var prog = p * units.length;
+          for (var i = 0; i < units.length; i++) {
+            units[i].style.opacity = (0.18 + 0.82 * clamp(prog - i, 0, 1)).toFixed(3);
+          }
+        }
+
+        /* 3. Sticky Card Stacking Scale */
+        var total = cards.length;
+        if (total && stack) {
+          var sp = clamp((sy - stackTop) / stackRange, 0, 1);
+          for (var k = 0; k < total; k++) {
+            var t = clamp((sp - k / total) / (1 - k / total || 1), 0, 1);
+            var target = 1 - (total - 1 - k) * 0.035;
+            cards[k].style.transform = 'scale(' + (1 + (target - 1) * t).toFixed(4) + ')';
+          }
+        }
+
+        /* 4. Active dock & nav scroll spy */
+        updateActiveDock();
+
+        /* 5. Scroll to top button visibility */
+        if (scrollToTopBtn) {
+          if (sy > 350) {
+            scrollToTopBtn.classList.add('visible');
+          } else {
+            scrollToTopBtn.classList.remove('visible');
+          }
+        }
+      }
+
+      /* ---------- Mobile Drawer Toggle & Scroll-Spy ---------- */
+      var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      var mobileDrawer = document.getElementById('mobileDrawer');
+      var drawerItems = mobileDrawer ? mobileDrawer.querySelectorAll('.mobile-drawer-item') : [];
+      var dockItems = document.querySelectorAll('.dock-item');
+      var scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+      if (scrollToTopBtn) {
+        scrollToTopBtn.addEventListener('click', function () {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      if (mobileMenuBtn && mobileDrawer) {
+        mobileMenuBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isOpen = mobileDrawer.classList.toggle('open');
+          mobileMenuBtn.classList.toggle('open', isOpen);
+          mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        drawerItems.forEach(function (item) {
+          item.addEventListener('click', function () {
+            mobileDrawer.classList.remove('open');
+            mobileMenuBtn.classList.remove('open');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        document.addEventListener('click', function (e) {
+          if (!mobileDrawer.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+            mobileDrawer.classList.remove('open');
+            mobileMenuBtn.classList.remove('open');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      var sections = [
+        { id: 'top', el: document.getElementById('top') },
+        { id: 'swords', el: document.getElementById('swords') },
+        { id: 'about', el: document.getElementById('about') },
+        { id: 'work', el: document.getElementById('work') },
+        { id: 'contact', el: document.getElementById('contact') }
+      ];
+
+      function updateActiveDock() {
+        var sy = window.scrollY + 180;
+        var currentId = 'top';
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].el && sections[i].el.offsetTop <= sy) {
+            currentId = sections[i].id;
+          }
+        }
+        dockItems.forEach(function (btn) {
+          var href = btn.getAttribute('href');
+          btn.classList.toggle('active', href === '#' + currentId);
+        });
+        document.querySelectorAll('.nav-menu .nav-item').forEach(function (link) {
+          var href = link.getAttribute('href');
+          link.classList.toggle('active', href === '#' + currentId);
+        });
+      }
+
+      function onScroll() {
+        if (!ticking) { ticking = true; requestAnimationFrame(onFrame); }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function () { measure(); onScroll(); }, { passive: true });
+      window.addEventListener('load', function () { measure(); onScroll(); });
+
+      /* ---------- Contact Form Submission Simulation ---------- */
+      var contactForm = document.getElementById('contactForm');
+      var formSuccessBox = document.getElementById('formSuccessBox');
+      var btnSubmitForm = document.getElementById('btnSubmitForm');
+      var btnSubmitText = document.getElementById('btnSubmitText');
+      var btnSubmitIcon = document.getElementById('btnSubmitIcon');
+      var btnSendAnother = document.getElementById('btnSendAnother');
+
+      if (contactForm && formSuccessBox) {
+        contactForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!contactForm.checkValidity()) return;
+
+          /* Button loading state */
+          if (btnSubmitForm) {
+            btnSubmitForm.disabled = true;
+            btnSubmitForm.style.opacity = '0.75';
+            if (btnSubmitText) btnSubmitText.textContent = lang === 'fa' ? 'در حال ارسال پیام...' : 'SENDING MESSAGE...';
+            if (btnSubmitIcon) btnSubmitIcon.textContent = '⚙';
+          }
+
+          /* Simulate realistic network encryption & celestial dispatch */
+          setTimeout(function () {
+            contactForm.style.display = 'none';
+            formSuccessBox.classList.add('show');
+            if (btnSubmitForm) {
+              btnSubmitForm.disabled = false;
+              btnSubmitForm.style.opacity = '1';
+              if (btnSubmitText) btnSubmitText.textContent = I18N[lang].btnTransmit;
+              if (btnSubmitIcon) btnSubmitIcon.textContent = '✦';
+            }
+          }, 750);
+        });
+
+        if (btnSendAnother) {
+          btnSendAnother.addEventListener('click', function () {
+            contactForm.reset();
+            formSuccessBox.classList.remove('show');
+            contactForm.style.display = 'flex';
+          });
+        }
+      }
+
+      /* Initialize language & trigger initial frame */
+      applyLang(lang);
+      measure();
+      onScroll();
+
+    })();
+  </script>
+</body>
+
+</html>
